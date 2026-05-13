@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Student Portal</title>
+
+<style>
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:#f5f7fb;
+}
+
+/* LOGIN */
+
+#login-page{
+background:linear-gradient(135deg,#8B5CF6,#A78BFA);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.login-card{
+background:white;
+padding:40px;
+border-radius:18px;
+width:360px;
+text-align:center;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.login-card input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:10px;
+border:1px solid #ddd;
+}
+
+.login-card button{
+width:100%;
+padding:12px;
+background:#7C3AED;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-size:16px;
+}
+
+/* DASHBOARD */
+
+#dashboard-page{
+display:none;
+}
+
+.dashboard-container{
+display:flex;
+height:100vh;
+}
+
+.sidebar{
+width:240px;
+background:#4C1D95;
+color:white;
+padding:20px 0;
+}
+
+.sidebar h3{
+text-align:center;
+}
+
+.sidebar a{
+display:block;
+padding:14px 20px;
+color:white;
+cursor:pointer;
+text-decoration:none;
+}
+
+.sidebar a:hover{
+background:#6D28D9;
+}
+
+.main{
+flex:1;
+display:flex;
+flex-direction:column;
+overflow-y:auto;
+}
+
+header{
+background:white;
+padding:15px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+header button{
+background:#EF4444;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.page{
+display:none;
+padding:20px;
+}
+
+.active{
+display:block;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,0.05);
+margin-bottom:20px;
+}
+
+/* ALERTS */
+
+.alert{
+padding:10px;
+border-radius:8px;
+margin-bottom:10px;
+}
+
+.warning{
+background:#FEF3C7;
+}
+
+.info{
+background:#DBEAFE;
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:12px;
+border:1px solid #ddd;
+text-align:center;
+}
+
+/* POPUP */
+
+#popup{
+position:fixed;
+top:20px;
+right:20px;
+background:#FEF3C7;
+padding:15px;
+border-radius:10px;
+display:none;
+z-index:999;
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
+}
+
+/* CHATBOT */
+
+#chatbot-btn{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#7C3AED;
+color:white;
+border:none;
+border-radius:50%;
+width:60px;
+height:60px;
+font-size:24px;
+cursor:pointer;
+}
+
+#chatbox{
+position:fixed;
+bottom:90px;
+right:20px;
+width:320px;
+background:white;
+border-radius:12px;
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
+display:none;
+flex-direction:column;
+overflow:hidden;
+}
+
+#chat-header{
+background:#7C3AED;
+color:white;
+padding:12px;
+font-weight:bold;
+}
+
+#chat-messages{
+height:250px;
+overflow-y:auto;
+padding:10px;
+font-size:14px;
+background:#FAFAFA;
+}
+
+.msg{
+margin:8px 0;
+padding:8px 12px;
+border-radius:8px;
+max-width:80%;
+}
+
+.user{
+background:#DDD6FE;
+margin-left:auto;
+text-align:right;
+}
+
+.bot{
+background:#E5E7EB;
+}
+
+#chat-input{
+display:flex;
+border-top:1px solid #ddd;
+}
+
+#chat-input input{
+flex:1;
+border:none;
+padding:12px;
+}
+
+#chat-input button{
+background:#7C3AED;
+color:white;
+border:none;
+padding:12px 15px;
+cursor:pointer;
+}
+
+/* STUDY GROUP */
+
+.study-group-card{
+background:#F9FAFB;
+padding:15px;
+border-radius:12px;
+margin-bottom:15px;
+border-left:6px solid #7C3AED;
+}
+
+.study-group-card button{
+background:#10B981;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+margin-top:10px;
+}
+
+.study-group-card button:hover{
+opacity:0.9;
+}
+
+select,
+textarea,
+input[type="text"]{
+width:100%;
+padding:12px;
+margin-top:10px;
+margin-bottom:10px;
+border-radius:10px;
+border:1px solid #ddd;
+box-sizing:border-box;
+}
+
+.card button{
+background:#7C3AED;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.qa-card,
+.project-card{
+background:#F9FAFB;
+padding:15px;
+border-radius:10px;
+margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+
+<div id="login-page">
+
+<div class="login-card">
+
+<h2>🎓  Student Portal</h2>
+
+<form id="login-form">
+
+<input type="text" id="username" placeholder="Student ID" required>
+
+<input type="password" id="password" placeholder="Password" required>
+
+<button type="submit">Login</button>
+
+</form>
+
+<div id="error" style="color:red;margin-top:10px;"></div>
+
+</div>
+
+</div>
+
+<!-- DASHBOARD -->
+
+<div id="dashboard-page">
+
+<div class="dashboard-container">
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<h3>Portal</h3>
+
+<a onclick="showPage('home')">🏠 Dashboard</a>
+<a onclick="showPage('subjects')">📘 Subjects</a>
+<a onclick="showPage('timetable')">📅 Timetable</a>
+<a onclick="showPage('attendance')">📊 Attendance</a>
+<a onclick="showPage('ai-chatbot')">🤖 AI Assistant</a>
+<a onclick="showPage('collab')">🤝 Peer Hub</a>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<header>
+
+<h2 id="welcome"></h2>
+
+<button onclick="logout()">Logout</button>
+
+</header>
+
+<!-- HOME -->
+
+<div id="home" class="page active">
+
+<div class="grid">
+
+<div class="card">
+
+<h2>🔔 Notice</h2>
+
+<div class="alert warning">
+Update password regularly
+</div>
+
+<div class="alert info">
+Backup your academic files
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>📊 Overview</h2>
+
+<p>GPA: <b>3.25</b></p>
+<p>Credits: <b>75 / 120</b></p>
+<p>Attendance: <b>78%</b></p>
+
+</div>
+
+<div class="card">
+
+<h2>🤖 AI Suggestions</h2>
+
+<div id="suggestions"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- SUBJECTS -->
+
+<div id="subjects" class="page">
+
+<div class="card">
+
+<h3>📘 Subjects</h3>
+
+<ul>
+<li>Artificial Intelligence</li>
+<li>Networking</li>
+<li>Web Development</li>
+<li>Cloud Computing</li>
+</ul>
+
+</div>
+
+</div>
+
+<!-- TIMETABLE -->
+
+<div id="timetable" class="page">
+
+<div class="card">
+
+<h3>📅 Weekly Timetable</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>Day</th>
+<th>Subject</th>
+<th>Time</th>
+</tr>
+</thead>
+
+<tbody id="timetable-body"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- ATTENDANCE -->
+
+<div id="attendance" class="page">
+
+<div class="card">
+
+<h3>📊 Attendance</h3>
+
+<table>
+
+<tr>
+<td>Web Techniques</td>
+<td>45%</td>
+</tr>
+
+<tr>
+<td>AI Fundamentals</td>
+<td>60%</td>
+</tr>
+
+<tr>
+<td>Networking</td>
+<td>82%</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- ================= AI ASSISTANT ================= -->
+
+<div id="ai-chatbot" class="page">
+
+<div class="card">
+
+<h3>🤖 AI Assistant</h3>
+
+<p>
+Ask your academic questions using the chatbot below 👇
+</p>
+
+<!-- CHAT AREA -->
+
+<div id="aiChatArea" style="
+background:#FAFAFA;
+height:350px;
+overflow-y:auto;
+padding:15px;
+border-radius:12px;
+margin-top:15px;
+margin-bottom:15px;
+">
+
+<div class="msg bot">
+Hello 👋 I am your AI Assistant. Ask me anything about your studies.
+</div>
+
+</div>
+
+<!-- INPUT AREA -->
+
+<div style="
+display:flex;
+gap:10px;
+">
+
+<input
+type="text"
+id="aiInput"
+placeholder="Type your question..."
+style="flex:1;"
+>
+
+<button onclick="sendAIChat()">
+➤
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* ================= AI ASSISTANT CHATBOT ================= */
+
+async function sendAIChat(){
+
+let input = document.getElementById("aiInput");
+
+let text = input.value.trim();
+
+if(text === "") return;
+
+let area = document.getElementById("aiChatArea");
+
+/* USER MESSAGE */
+
+area.innerHTML += `
+<div class="msg user">
+${text}
+</div>
+`;
+
+input.value = "";
+
+/* LOADING MESSAGE */
+
+area.innerHTML += `
+<div class="msg bot" id="loadingAI">
+🤖 AI is generating response...
+</div>
+`;
+
+area.scrollTop = area.scrollHeight;
+
+try{
+
+const response = await fetch('/ai-support',{
+
+method:'POST',
+
+headers:{
+'Content-Type':'application/json'
+},
+
+body: JSON.stringify({
+message:text
+})
+
+});
+
+const data = await response.json();
+
+/* REMOVE LOADING */
+
+document.getElementById("loadingAI").remove();
+
+/* SHOW AI RESPONSE */
+
+area.innerHTML += `
+<div class="msg bot">
+${data.reply}
+</div>
+`;
+
+area.scrollTop = area.scrollHeight;
+
+}catch(error){
+
+document.getElementById("loadingAI").remove();
+
+area.innerHTML += `
+<div class="msg bot">
+⚠️ Unable to connect to AI backend.
+</div>
+`;
+
+}
+
+}
+
+</script>
+
+<!-- ========================= PEER COLLABORATION HUB (UPGRADED ONLY) ========================= -->
+
+<div id="collab" class="page">
+
+<h2>🤝 Peer Collaboration Hub</h2>
+
+<!-- ================= GROUP STUDY MATCHING ================= -->
+
+<div class="card">
+
+<h3>📚 Group Study Matching</h3>
+
+<select id="studySubject">
+
+<option value="">Select Subject</option>
+<option>Artificial Intelligence</option>
+<option>Web Development</option>
+<option>Networking</option>
+<option>Cloud Computing</option>
+<option>Database Systems</option>
+
+</select>
+
+<input type="text"
+id="studyTopic"
+placeholder="Enter study topic">
+
+<button onclick="addStudyGroup()">
+Find / Join Study Group
+</button>
+
+<br><br>
+
+<div id="studyList">
+
+<div class="study-group-card">
+
+<h4>🤖 Artificial Intelligence</h4>
+
+<p><b>Topic:</b> Machine Learning Revision</p>
+
+<p><b>Members:</b> 4 / 6</p>
+
+<p>
+<b>Status:</b>
+<span style="color:green;font-weight:bold;">
+Open
+</span>
+</p>
+
+<p><b>Study Time:</b> Tonight 8:00 PM</p>
+
+<p style="color:#7C3AED;">
+🤖 AI Suggestion:
+Students with similar interests are active now.
+</p>
+
+<button onclick="joinGroup(this)">
+Join Group
+</button>
+
+</div>
+
+<div class="study-group-card" style="border-left:6px solid #3B82F6;">
+
+<h4>🌐 Web Development</h4>
+
+<p><b>Topic:</b> JavaScript Practice</p>
+
+<p><b>Members:</b> 3 / 5</p>
+
+<p>
+<b>Status:</b>
+<span style="color:green;font-weight:bold;">
+Open
+</span>
+</p>
+
+<p><b>Study Time:</b> Saturday 2:00 PM</p>
+
+<p style="color:#7C3AED;">
+🤖 AI Suggestion:
+High student activity detected for this topic.
+</p>
+
+<button onclick="joinGroup(this)">
+Join Group
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= ONLINE PEER SUPPORT ================= -->
+
+<div class="card">
+
+<h3>💬 Online Peer Support</h3>
+
+<textarea id="supportText"
+placeholder="Share your academic problem or ask for support..."></textarea>
+
+<button onclick="addSupport()">
+Post Support Request
+</button>
+
+<br><br>
+
+<div id="supportList">
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- POPUP -->
+
+<div id="popup"></div>
+
+<script>
+
+/* USERS */
+
+const users = [
+{
+username:"123",
+password:"123",
+name:"Student"
+}
+];
+
+/* LOGIN */
+
+document.getElementById("login-form").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let u=document.getElementById("username").value;
+let p=document.getElementById("password").value;
+
+let user=users.find(x=>x.username===u && x.password===p);
+
+if(user){
+
+document.getElementById("login-page").style.display="none";
+
+document.getElementById("dashboard-page").style.display="block";
+
+document.getElementById("welcome").innerText="🎓 Welcome, "+user.name;
+
+loadTimetable();
+
+loadSuggestions();
+
+checkAttendance();
+
+}else{
+
+document.getElementById("error").innerText="Invalid Login";
+
+}
+
+});
+
+/* NAVIGATION */
+
+function showPage(page){
+
+document.querySelectorAll(".page").forEach(p=>{
+p.classList.remove("active");
+});
+
+document.getElementById(page).classList.add("active");
+
+}
+
+function logout(){
+location.reload();
+}
+
+/* TIMETABLE */
+
+const timetable = [
+
+{
+day:"Monday",
+subject:"Artificial Intelligence",
+time:"9AM - 11AM"
+},
+
+{
+day:"Tuesday",
+subject:"Web Development",
+time:"10AM - 12PM"
+},
+
+{
+day:"Wednesday",
+subject:"Networking",
+time:"2PM - 4PM"
+}
+
+];
+
+function loadTimetable(){
+
+let body=document.getElementById("timetable-body");
+
+body.innerHTML="";
+
+timetable.forEach(t=>{
+
+body.innerHTML+=`
+<tr>
+<td>${t.day}</td>
+<td>${t.subject}</td>
+<td>${t.time}</td>
+</tr>
+`;
+
+});
+
+}
+
+/* POPUP */
+
+function showPopup(msg){
+
+popup.innerText=msg;
+
+popup.style.display="block";
+
+setTimeout(()=>{
+popup.style.display="none";
+},4000);
+
+}
+
+/* ATTENDANCE */
+
+function checkAttendance(){
+
+showPopup("⚠️ Warning: Low attendance in Web Techniques");
+
+}
+
+/* AI SUGGESTIONS */
+
+function loadSuggestions(){
+
+let box=document.getElementById("suggestions");
+
+let tips=[
+"Revise Networking this week",
+"Practice JavaScript coding",
+"Attend upcoming AI classes"
+];
+
+tips.forEach(t=>{
+
+let d=document.createElement("div");
+
+d.className="alert info";
+
+d.innerText=t;
+
+box.appendChild(d);
+
+});
+
+}
+
+/* ================= GROUP STUDY MATCHING ================= */
+
+function addStudyGroup(){
+
+let subject=document.getElementById("studySubject").value;
+
+let topic=document.getElementById("studyTopic").value;
+
+if(subject==="" || topic===""){
+
+alert("Please select subject and enter topic");
+
+return;
+
+}
+
+let randomMembers=Math.floor(Math.random()*5)+1;
+
+document.getElementById("studyList").innerHTML += `
+
+<div class="study-group-card">
+
+<h4>📘 ${subject}</h4>
+
+<p><b>Topic:</b> ${topic}</p>
+
+<p><b>Members:</b> ${randomMembers} / 6</p>
+
+<p>
+<b>Status:</b>
+<span style="color:green;font-weight:bold;">
+Open
+</span>
+</p>
+
+<p><b>Study Time:</b> Tonight 8:00 PM</p>
+
+<p style="color:#7C3AED;">
+🤖 AI Suggestion:
+Students studying this subject are active tonight.
+</p>
+
+<button onclick="joinGroup(this)">
+Join Group
+</button>
+
+</div>
+
+`;
+
+document.getElementById("studySubject").value="";
+document.getElementById("studyTopic").value="";
+
+}
+
+function joinGroup(button){
+
+button.innerHTML="✅ Joined";
+
+button.style.background="#6B7280";
+
+showPopup("🎉 Successfully joined study group!");
+
+}
+
+/* ================= PEER Q&A ================= */
+
+function addQuestion(){
+
+let q=document.getElementById("questionText").value;
+
+if(q==="") return;
+
+document.getElementById("qaList").innerHTML += `
+
+<div class="qa-card">
+
+<h4>${q}</h4>
+
+<p><b>Posted by:</b> Student</p>
+
+<div style="
+background:white;
+padding:10px;
+border-radius:8px;
+margin-top:10px;
+">
+
+Discussion opened for students.
+
+</div>
+
+<p style="
+margin-top:10px;
+color:#7C3AED;
+">
+
+🤖 AI Suggestion:
+Discuss this topic with classmates or lecturers.
+
+</p>
+
+</div>
+
+`;
+
+document.getElementById("questionText").value="";
+
+}
+
+/* ================= REAL AI ONLINE PEER SUPPORT ================= */
+
+async function addSupport(){
+
+let text = document.getElementById("supportText").value.trim();
+
+if(text === "") return;
+
+let supportList = document.getElementById("supportList");
+
+/* USER MESSAGE */
+
+supportList.innerHTML += `
+
+<div class="qa-card">
+
+<h4>🧑 Student Support Request</h4>
+
+<p>${text}</p>
+
+<p style="color:#6B7280;">
+Waiting for AI support reply...
+</p>
+
+</div>
+
+`;
+
+document.getElementById("supportText").value = "";
+
+supportList.scrollTop = supportList.scrollHeight;
+
+try{
+
+const response = await fetch('/ai-support',{
+method:'POST',
+headers:{
+'Content-Type':'application/json'
+},
+body: JSON.stringify({
+message:text
+})
+});
+
+const data = await response.json();
+
+/* AI RESPONSE */
+
+supportList.innerHTML += `
+
+<div class="qa-card" style="border-left:6px solid #7C3AED;">
+
+<h4>🤖 AI Peer Support</h4>
+
+<p>${data.reply}</p>
+
+</div>
+
+`;
+
+supportList.scrollTop = supportList.scrollHeight;
+
+}catch(error){
+
+supportList.innerHTML += `
+
+<div class="qa-card">
+
+<h4>⚠️ Connection Error</h4>
+
+<p>Unable to connect to Python AI backend.</p>
+
+</div>
+
+`;
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
