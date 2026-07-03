@@ -9,7 +9,7 @@ app = Flask(__name__)
 # ================= GROQ API =================
 # Replace with your Groq API Key
 client = Groq(
-    api_key="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"
+    api_key=""
 )
 
 # ================= HOME =================
