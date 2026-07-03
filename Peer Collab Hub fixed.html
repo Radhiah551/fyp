@@ -1025,7 +1025,7 @@ li {
     <form id="login-form">
       <div class="input-group">
         <label for="username">Student ID</label>
-        <input type="text" id="username" placeholder="Enter student ID (e.g. 1231303288)" required>
+        <input type="text" id="username" placeholder="Enter student ID (e.g. 123)" required>
       </div>
       
       <div class="input-group">
@@ -1126,27 +1126,36 @@ li {
               Academic Overview
             </h2>
             
-            <p style="font-size: 24px; font-weight: 700; margin-bottom: 18px; color: var(--success);">GPA: 3.25</p>
-            
+            <p id="gpa-display" style="font-size: 24px; font-weight: 700; margin-bottom: 18px; color: var(--success);">GPA: -</p>
+
             <div class="progress-bar-container">
               <div class="progress-info">
                 <span>Credit Hours Completed</span>
-                <strong>75 / 120 Hours</strong>
+                <strong id="credit-info">- / 120 Hours</strong>
               </div>
               <div class="progress-bar">
-                <div class="progress-bar-fill" style="width: 62.5%;"></div>
+                <div class="progress-bar-fill" id="credit-fill" style="width: 0%;"></div>
               </div>
             </div>
-            
+
             <div class="progress-bar-container">
               <div class="progress-info">
                 <span>Overall Attendance</span>
-                <strong>78%</strong>
+                <strong id="attendance-info">-%</strong>
               </div>
               <div class="progress-bar">
-                <div class="progress-bar-fill" style="width: 78%; background: linear-gradient(90deg, var(--warning), #f59e0b);"></div>
+                <div class="progress-bar-fill" id="attendance-fill" style="width: 0%; background: linear-gradient(90deg, var(--warning), #f59e0b);"></div>
               </div>
             </div>
+          </div>
+
+          <!-- FEES STATUS (Task 2: warning when fees not fully paid) -->
+          <div class="card">
+            <h2>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="stroke:var(--warning); stroke-width:2;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              Fees Status
+            </h2>
+            <div id="fees-status"></div>
           </div>
           
           <!-- AI STUDY TIP OF THE DAY -->
@@ -1167,41 +1176,13 @@ li {
         <div class="card">
           <h3>📘 Current Semester Subjects</h3>
           <p style="color:var(--text-muted); margin-bottom:20px; font-size:14px;">Here are the subjects you are registered for in this semester.</p>
-          
-          <div class="grid" style="margin-top:10px;">
-            <div style="background:rgba(255,255,255,0.02); padding:16px; border:1px solid var(--border-color); border-radius:var(--radius-md);">
-              <h4 style="color:var(--primary); font-size:16px; margin-bottom:8px;">Artificial Intelligence</h4>
-              <p style="font-size:13px; color:var(--text-muted);">Lecturer: Dr. Amelia Ross</p>
-              <div style="display:flex; justify-content:space-between; margin-top:12px; font-size:13px;">
-                <span>Course Code: <strong>AI301</strong></span>
-                <span style="color:var(--success);">3 Credits</span>
-              </div>
-            </div>
-            <div style="background:rgba(255,255,255,0.02); padding:16px; border:1px solid var(--border-color); border-radius:var(--radius-md);">
-              <h4 style="color:var(--primary); font-size:16px; margin-bottom:8px;">Networking</h4>
-              <p style="font-size:13px; color:var(--text-muted);">Lecturer: Prof. Haziq Amin</p>
-              <div style="display:flex; justify-content:space-between; margin-top:12px; font-size:13px;">
-                <span>Course Code: <strong>NET204</strong></span>
-                <span style="color:var(--success);">4 Credits</span>
-              </div>
-            </div>
-            <div style="background:rgba(255,255,255,0.02); padding:16px; border:1px solid var(--border-color); border-radius:var(--radius-md);">
-              <h4 style="color:var(--primary); font-size:16px; margin-bottom:8px;">Web Development</h4>
-              <p style="font-size:13px; color:var(--text-muted);">Lecturer: Ms. Sarah Lim</p>
-              <div style="display:flex; justify-content:space-between; margin-top:12px; font-size:13px;">
-                <span>Course Code: <strong>WD202</strong></span>
-                <span style="color:var(--success);">3 Credits</span>
-              </div>
-            </div>
-            <div style="background:rgba(255,255,255,0.02); padding:16px; border:1px solid var(--border-color); border-radius:var(--radius-md);">
-              <h4 style="color:var(--primary); font-size:16px; margin-bottom:8px;">Cloud Computing</h4>
-              <p style="font-size:13px; color:var(--text-muted);">Lecturer: Dr. Jason Tan</p>
-              <div style="display:flex; justify-content:space-between; margin-top:12px; font-size:13px;">
-                <span>Course Code: <strong>CC402</strong></span>
-                <span style="color:var(--success);">3 Credits</span>
-              </div>
-            </div>
-          </div>
+
+          <div class="grid" id="subjects-grid" style="margin-top:10px;"></div>
+        </div>
+        <div class="card">
+          <h3>📗 Next Semester Subjects</h3>
+          <p style="color:var(--text-muted); margin-bottom:20px; font-size:14px;">Subjects projected for your next semester registration.</p>
+          <div class="grid" id="next-subjects-grid" style="margin-top:10px;"></div>
         </div>
       </div>
       
@@ -1230,43 +1211,28 @@ li {
       <!-- ATTENDANCE PAGE -->
       <div id="attendance" class="page">
         <div class="card">
-          <h3>📊 Course Attendance Statistics</h3>
-          <p style="color:var(--text-muted); margin-bottom:20px; font-size:14px;">Verify your attendance percentages. Classes with attendance under 80% require immediate review.</p>
-          
+          <h3>📊 My Attendance</h3>
+          <p style="color:var(--text-muted); margin-bottom:20px; font-size:14px;">Your overall attendance. Attendance under 80% requires immediate review (80% is the barring threshold).</p>
+          <div id="my-attendance"></div>
+        </div>
+
+        <!-- Task 3: show other students' attendance -->
+        <div class="card">
+          <h3>👥 Other Students' Attendance</h3>
+          <p style="color:var(--text-muted); margin-bottom:20px; font-size:14px;">Overall attendance of your fellow students across the portal.</p>
+
           <div style="overflow-x:auto;">
             <table>
               <thead>
                 <tr>
-                  <th>Subject Name</th>
-                  <th>Registered Lectures</th>
-                  <th>Attended Lectures</th>
+                  <th>Student ID</th>
+                  <th>Name</th>
+                  <th>Semester</th>
                   <th>Attendance %</th>
-                  <th>Status Warning</th>
+                  <th>Status</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>Web Techniques</td>
-                  <td>20</td>
-                  <td>9</td>
-                  <td><strong style="color:var(--danger)">45%</strong></td>
-                  <td><span style="color:var(--danger); font-size:12px; font-weight:600; background:rgba(239,68,68,0.1); padding:4px 8px; border-radius:10px;">🔴 Barring Risk</span></td>
-                </tr>
-                <tr>
-                  <td>AI Fundamentals</td>
-                  <td>20</td>
-                  <td>12</td>
-                  <td><strong style="color:var(--warning)">60%</strong></td>
-                  <td><span style="color:var(--warning); font-size:12px; font-weight:600; background:rgba(245,158,11,0.1); padding:4px 8px; border-radius:10px;">🟡 Low Attendance</span></td>
-                </tr>
-                <tr>
-                  <td>Networking</td>
-                  <td>20</td>
-                  <td>18</td>
-                  <td><strong style="color:var(--success)">90%</strong></td>
-                  <td><span style="color:var(--success); font-size:12px; font-weight:600; background:rgba(16,185,129,0.1); padding:4px 8px; border-radius:10px;">🟢 Safe</span></td>
-                </tr>
-              </tbody>
+              <tbody id="others-attendance-body"></tbody>
             </table>
           </div>
         </div>
@@ -1392,6 +1358,10 @@ li {
           
           <!-- CREATE POST COMPOSER -->
           <div class="post-creator-card">
+            <div id="postAuthorPreview" style="display:none; align-items:center; gap:10px; margin-bottom:10px; padding:8px 10px; background:var(--card-bg,#1e293b); border-radius:8px; font-size:13px; color:var(--text-muted);">
+              <div id="postAuthorAvatar" style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#10b981,#3b82f6);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:13px;"></div>
+              <span>Posting as <strong id="postAuthorName"></strong></span>
+            </div>
             <textarea id="postText" placeholder="Write your post here or click a suggestion above..."></textarea>
             <div class="post-creator-actions">
               <button onclick="submitPost()">Publish Post</button>
@@ -1422,49 +1392,206 @@ const appState = {
   posts: []
 };
 
-/* LOGGED USERS & DATA MOCKS */
-const users = [
-  { username: "1231303288", password: "123", name: "Ms. Radhiah" }
-];
-
 const timetable = [
   { day: "Monday", subject: "Artificial Intelligence", time: "9:00 AM - 11:00 AM", venue: "Lab 3" },
   { day: "Tuesday", subject: "Web Development", time: "10:00 AM - 12:00 PM", venue: "Room 402" },
   { day: "Wednesday", subject: "Networking", time: "2:00 PM - 4:00 PM", venue: "Lab 1" }
 ];
 
-/* LOGIN LOGIC */
-document.getElementById("login-form").addEventListener("submit", function(e) {
+/* LOGIN LOGIC — connected to Flask /login backend */
+document.getElementById("login-form").addEventListener("submit", async function(e) {
   e.preventDefault();
-  
+
   const u = document.getElementById("username").value.trim();
   const p = document.getElementById("password").value;
-  const user = users.find(x => x.username === u && x.password === p);
-  
-  if (user) {
-    appState.user = user;
-    
-    document.getElementById("login-page").style.display = "none";
-    document.getElementById("dashboard-page").style.display = "block";
-    document.getElementById("welcome").innerHTML = `🎓 Welcome back, <span style="color:var(--primary);">${user.name}</span>`;
-    document.getElementById("student-id-display").innerText = user.username;
-    
-    // Load pages data
-    loadTimetable();
-    loadSuggestions();
-    showPopup("🎉 Logged in successfully!");
-    
-    // Check if attendance is critically low and raise notification
-    setTimeout(() => {
-      showPopup("⚠️ Low attendance warning in Web Techniques (45%)");
-    }, 1500);
-    
-    // Initialize feed
-    loadFeedPosts();
-  } else {
-    document.getElementById("error").innerText = "Invalid Student ID or Password.";
+  const errorBox = document.getElementById("error");
+  errorBox.innerText = "";
+
+  try {
+    const response = await fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ student_id: u, password: p })
+    });
+
+    const data = await response.json();
+
+    if (data.status === "success") {
+      const student = data.student;
+      appState.user = student;
+
+      document.getElementById("login-page").style.display = "none";
+      document.getElementById("dashboard-page").style.display = "block";
+      document.getElementById("welcome").innerHTML = `🎓 Welcome back, <span style="color:var(--primary);">${student.name}</span>`;
+      document.getElementById("student-id-display").innerText = student.student_id;
+
+      // Load pages data with the logged-in student's real records
+      loadTimetable();
+      loadSuggestions();
+      loadDashboard();
+      loadSubjects();
+      loadAttendance();
+      loadFeedPosts();
+
+      showPopup("🎉 Logged in successfully!");
+
+      // Fees warning popup (Task 2)
+      if (Number(student.fees_balance) > 0) {
+        setTimeout(() => {
+          showPopup(`⚠️ Outstanding fees: RM ${Number(student.fees_balance).toFixed(2)} not fully paid!`);
+        }, 1500);
+      }
+    } else {
+      errorBox.innerText = data.message || "Invalid Student ID or Password.";
+    }
+  } catch (err) {
+    errorBox.innerText = "Cannot reach server. Make sure Python app.py is running.";
   }
 });
+
+/* DASHBOARD RENDERER — populates Academic Overview + Fees Status from real data */
+function loadDashboard() {
+  const s = appState.user;
+  if (!s) return;
+
+  // Academic Overview
+  document.getElementById("gpa-display").innerText = `GPA: ${s.gpa}`;
+
+  const credits = Number(s.credit_hours) || 0;
+  const creditPct = Math.min((credits / 120) * 100, 100);
+  document.getElementById("credit-info").innerText = `${credits} / 120 Hours`;
+  document.getElementById("credit-fill").style.width = creditPct + "%";
+
+  const att = Number(s.attendance) || 0;
+  document.getElementById("attendance-info").innerText = `${att}%`;
+  const attFill = document.getElementById("attendance-fill");
+  attFill.style.width = att + "%";
+  if (att >= 80) {
+    attFill.style.background = "linear-gradient(90deg, var(--success), #34d399)";
+  } else if (att >= 60) {
+    attFill.style.background = "linear-gradient(90deg, var(--warning), #f59e0b)";
+  } else {
+    attFill.style.background = "linear-gradient(90deg, var(--danger), #f87171)";
+  }
+
+  // Fees Status (Task 2)
+  const feesBox = document.getElementById("fees-status");
+  const total = Number(s.fees_total) || 0;
+  const balance = Number(s.fees_balance) || 0;
+  const paid = total - balance;
+
+  if (balance > 0) {
+    feesBox.innerHTML = `
+      <div class="alert warning">
+        <span class="alert-icon">⚠️</span>
+        <div>
+          <strong>Fees not fully paid.</strong>
+          You still owe <strong>RM ${balance.toFixed(2)}</strong> out of RM ${total.toFixed(2)}.
+          Please settle your balance to avoid registration holds.
+        </div>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-info">
+          <span>Amount Paid</span>
+          <strong>RM ${paid.toFixed(2)} / RM ${total.toFixed(2)}</strong>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-bar-fill" style="width:${total ? (paid / total) * 100 : 0}%; background: linear-gradient(90deg, var(--warning), #f59e0b);"></div>
+        </div>
+      </div>
+    `;
+  } else {
+    feesBox.innerHTML = `
+      <div class="alert info" style="background: var(--success-glow); border-left-color: var(--success); color:#bbf7d0;">
+        <span class="alert-icon">✅</span>
+        <div><strong>Fees fully paid.</strong> Total RM ${total.toFixed(2)} settled. No outstanding balance.</div>
+      </div>
+    `;
+  }
+}
+
+/* SUBJECTS RENDERER — current + next semester subjects from real data */
+function buildSubjectCard(name) {
+  return `
+    <div style="background:rgba(255,255,255,0.02); padding:16px; border:1px solid var(--border-color); border-radius:var(--radius-md);">
+      <h4 style="color:var(--primary); font-size:16px; margin-bottom:8px;">${name}</h4>
+      <p style="font-size:13px; color:var(--text-muted);">Registered subject</p>
+    </div>
+  `;
+}
+
+function loadSubjects() {
+  const s = appState.user;
+  if (!s) return;
+
+  const currentGrid = document.getElementById("subjects-grid");
+  const nextGrid = document.getElementById("next-subjects-grid");
+
+  const current = (s.subjects || "").split(",").map(x => x.trim()).filter(Boolean);
+  const next = (s.next_sem_subjects || "").split(",").map(x => x.trim()).filter(Boolean);
+
+  currentGrid.innerHTML = current.length
+    ? current.map(buildSubjectCard).join("")
+    : `<p style="color:var(--text-muted);">No subjects registered.</p>`;
+
+  nextGrid.innerHTML = next.length
+    ? next.map(buildSubjectCard).join("")
+    : `<p style="color:var(--text-muted);">No next-semester subjects yet.</p>`;
+}
+
+/* ATTENDANCE RENDERER — own attendance + other students' attendance (Task 3) */
+function attendanceStatusBadge(att) {
+  if (att >= 80) {
+    return `<span style="color:var(--success); font-size:12px; font-weight:600; background:rgba(16,185,129,0.1); padding:4px 8px; border-radius:10px;">🟢 Safe</span>`;
+  } else if (att >= 60) {
+    return `<span style="color:var(--warning); font-size:12px; font-weight:600; background:rgba(245,158,11,0.1); padding:4px 8px; border-radius:10px;">🟡 Low Attendance</span>`;
+  }
+  return `<span style="color:var(--danger); font-size:12px; font-weight:600; background:rgba(239,68,68,0.1); padding:4px 8px; border-radius:10px;">🔴 Barring Risk</span>`;
+}
+
+async function loadAttendance() {
+  const s = appState.user;
+  if (!s) return;
+
+  // My attendance summary
+  const att = Number(s.attendance) || 0;
+  const myColor = att >= 80 ? "var(--success)" : (att >= 60 ? "var(--warning)" : "var(--danger)");
+  document.getElementById("my-attendance").innerHTML = `
+    <p style="font-size:32px; font-weight:700; color:${myColor}; margin-bottom:8px;">${att}%</p>
+    <div>${attendanceStatusBadge(att)}</div>
+  `;
+
+  // Other students' attendance from backend
+  const tbody = document.getElementById("others-attendance-body");
+  tbody.innerHTML = `<tr><td colspan="5" style="color:var(--text-muted);">Loading...</td></tr>`;
+
+  try {
+    const response = await fetch("/get-students");
+    const students = await response.json();
+
+    const others = students.filter(x => x.student_id !== s.student_id);
+    if (others.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5" style="color:var(--text-muted);">No other students found.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = others.map(o => {
+      const a = Number(o.attendance) || 0;
+      const color = a >= 80 ? "var(--success)" : (a >= 60 ? "var(--warning)" : "var(--danger)");
+      return `
+        <tr>
+          <td>${o.student_id}</td>
+          <td>${o.name}</td>
+          <td>${o.semester}</td>
+          <td><strong style="color:${color}">${a}%</strong></td>
+          <td>${attendanceStatusBadge(a)}</td>
+        </tr>
+      `;
+    }).join("");
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="5" style="color:var(--danger);">Failed to load other students. Is the Flask server running?</td></tr>`;
+  }
+}
 
 /* PAGE TRANSITION HANDLER */
 function showPage(pageId) {
@@ -1603,7 +1730,10 @@ async function sendAIChat() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ message: text })
+      body: JSON.stringify({
+        message: text,
+        student_id: appState.user ? appState.user.student_id : "123"
+      })
     });
     
     const data = await response.json();
@@ -1641,6 +1771,18 @@ function selectSuggestion(pill) {
   const textarea = document.getElementById("postText");
   textarea.value = pill.innerText;
   textarea.focus();
+
+  // Show "Posting as <name>" preview using the logged-in student's name
+  const authorName = appState.user ? appState.user.name : "You";
+  const initial = authorName.charAt(0).toUpperCase();
+
+  const preview = document.getElementById("postAuthorPreview");
+  const nameEl  = document.getElementById("postAuthorName");
+  const avatarEl = document.getElementById("postAuthorAvatar");
+
+  nameEl.textContent  = authorName;
+  avatarEl.textContent = initial;
+  preview.style.display = "flex";
 }
 
 async function loadFeedPosts() {
@@ -1725,6 +1867,12 @@ async function submitPost() {
   // Show immediate publishing UI indicator
   showPopup("📡 Publishing post and waiting for peer feedback...");
   textarea.value = "";
+
+  // Hide author preview after posting
+  document.getElementById("postAuthorPreview").style.display = "none";
+
+  // Use the logged-in student's real name
+  const studentName = appState.user ? appState.user.name : "Student";
   
   try {
     const response = await fetch("/add-post", {
@@ -1732,7 +1880,7 @@ async function submitPost() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ message: message })
+      body: JSON.stringify({ message: message, student_name: studentName })
     });
     
     if (response.ok) {
@@ -1778,6 +1926,9 @@ async function submitComment(postId) {
   if (commentText === "") return;
   
   input.value = "";
+
+  // Use logged-in student's name as commenter
+  const commenterName = appState.user ? appState.user.name : "Student";
   
   try {
     const response = await fetch(`/comment-post/${postId}`, {
@@ -1785,7 +1936,7 @@ async function submitComment(postId) {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ comment: commentText })
+      body: JSON.stringify({ comment: commentText, commenter_name: commenterName })
     });
     
     if (response.ok) {
