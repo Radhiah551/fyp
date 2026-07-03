@@ -67,6 +67,35 @@ students_data = [
         4500.0, 0.0, 3.60, 88,
         '78', '80', '85', '82%', 105,
         'Thesis Project, Professional Ethics', 'PASS'
+    ),
+    # ----- 4 newly added students -----
+    (
+        '128', '128', 'Nurul Izzah', 3,
+        'Artificial Intelligence, Web Development, Database Systems',
+        4000.0, 1500.0, 3.40, 82,
+        '80', '76', '84', '80%', 72,
+        'Cloud Computing, Mobile App Development', 'PASS'
+    ),
+    (
+        '129', '129', 'Lim Wei Jie', 2,
+        'Data Structures, Object-Oriented Programming, Discrete Mathematics',
+        3800.0, 0.0, 3.10, 70,
+        '68', '65', '74', '69%', 48,
+        'Operating Systems, Algorithms', 'PASS'
+    ),
+    (
+        '130', '130', 'Arjun Mehta', 4,
+        'Software Engineering, Networking, Cloud Computing',
+        4200.0, 800.0, 3.70, 91,
+        '88', '86', '90', '88%', 88,
+        'DevOps, Cyber Security', 'PASS'
+    ),
+    (
+        '131', '131', 'Chloe Tan', 5,
+        'Cyber Security, Human Computer Interaction, Artificial Intelligence',
+        4500.0, 2500.0, 2.40, 58,
+        '50', '48', '55', '51%', 100,
+        'Thesis Project, Professional Ethics', 'FAIL'
     )
 ]
 
